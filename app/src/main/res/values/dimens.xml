@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_description_size">13sp</dimen>
+    <dimen name="title_size">17sp</dimen>
+    <dimen name="promoMessage_size">11sp</dimen>
+    <dimen name="bottomDescription_size">13sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
+
