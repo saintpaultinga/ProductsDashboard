@@ -14,24 +14,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import timber.log.Timber;
 
 public class ProductRepository {
-    private static ProductRepository REPOSITORY_INSTANCE;
-    private IProductService productService;
-    // TODO: use dagger to inject the IProductService
-    private ProductRepository(IProductService productService) {
+
+    final private IProductService productService;
+    @Inject
+    public ProductRepository(IProductService productService) {
         this.productService = productService;
-    }
-
-
-    public static synchronized ProductRepository getRepositoryInstance(IProductService productService) {
-        if (REPOSITORY_INSTANCE == null) {
-            REPOSITORY_INSTANCE = new ProductRepository(productService);
-        }
-        return REPOSITORY_INSTANCE;
     }
 
     public LiveData<List<Product>> getRemoteProducts() {

@@ -1,9 +1,11 @@
-package com.icc.commerce.productsdashboard;
+package com.icc.commerce.productsdashboard.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
+
+import com.icc.commerce.productsdashboard.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +25,7 @@ public class ItemWebViewActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String url = bundle.getString("url");
+            final String url = bundle.getString("url");
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.loadUrl(url);
         } else {
