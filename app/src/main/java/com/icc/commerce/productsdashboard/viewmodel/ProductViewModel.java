@@ -18,13 +18,7 @@ public class ProductViewModel extends ViewModel {
             this.repository = repository;
     }
 
-    // TODO this should be remove, I've added just for unit testing
-    public void setRepository(ProductRepository repository) {
-        this.repository = repository;
-    }
-
     public LiveData<List<Product>> getProductList() {
         return repository.getRemoteProducts();
     }
-
 }

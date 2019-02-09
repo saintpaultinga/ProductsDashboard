@@ -11,29 +11,31 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ProductViewModelTest {
 
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Mock
     ProductRepository productRepository;
+    @InjectMocks
+    ProductViewModel productViewModel;
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
-
-
-    @Before
-    public void setUp() throws Exception {
-        productRepository = mock(ProductRepository.class);
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void test_GetProductList_isEmpty() {
@@ -41,9 +43,7 @@ public class ProductViewModelTest {
         when(productRepository.getRemoteProducts())
                 .thenReturn(products);
         products.setValue(new ArrayList<Product>());
-        ProductViewModel viewModel = new ProductViewModel();
-        viewModel.setRepository(productRepository);
-        assertEquals(0, viewModel.getProductList().getValue().size());
+        assertEquals(0, productViewModel.getProductList().getValue().size());
     }
 
     @Test
@@ -66,9 +66,7 @@ public class ProductViewModelTest {
         // set the list to the liveData
         mlProducts.setValue(productList);
 
-        ProductViewModel viewModel = new ProductViewModel();
-        viewModel.setRepository(productRepository);
-        assertEquals(2, viewModel.getProductList().getValue().size());
+        assertEquals(2, productViewModel.getProductList().getValue().size());
     }
 
     @Test
@@ -76,8 +74,6 @@ public class ProductViewModelTest {
         MutableLiveData<List<Product>> products = new MutableLiveData<>();
         when(productRepository.getRemoteProducts())
                 .thenReturn(products);
-        ProductViewModel viewModel = new ProductViewModel();
-        viewModel.setRepository(productRepository);
-        assertEquals(null, viewModel.getProductList().getValue());
+        assertNull(null, productViewModel.getProductList().getValue());
     }
 }
