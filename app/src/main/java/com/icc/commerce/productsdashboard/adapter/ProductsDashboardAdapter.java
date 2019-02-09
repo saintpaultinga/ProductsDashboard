@@ -1,4 +1,4 @@
-package com.icc.commerce.productsdashboard.adapters;
+package com.icc.commerce.productsdashboard.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
@@ -34,7 +34,7 @@ public class ProductsDashboardAdapter extends ListAdapter<Product, ProductsDashb
         super(callback);
     }
 
-    private static DiffUtil.ItemCallback<Product> callback = new DiffUtil.ItemCallback<Product>() {
+    final private static DiffUtil.ItemCallback<Product> callback = new DiffUtil.ItemCallback<Product>() {
         @Override
         public boolean areItemsTheSame(@NonNull Product firstProduct, @NonNull Product secondProduct) {
             return firstProduct.compareTo(secondProduct) == 0;
@@ -72,7 +72,6 @@ public class ProductsDashboardAdapter extends ListAdapter<Product, ProductsDashb
                     @Override
                     public void onSuccess() {
                     }
-
                     @Override
                     public void onError(Exception e) {
                         e.printStackTrace();
@@ -85,14 +84,14 @@ public class ProductsDashboardAdapter extends ListAdapter<Product, ProductsDashb
     }
 
     private void populateContent(Product currentProduct, ProductCardViewHolder productCardViewHolder) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         // make sure the linearLayout is empty
         if (productCardViewHolder.mContent.getChildCount() > 0) {
             productCardViewHolder.mContent.removeAllViews();
         }
-        List<Item> content = currentProduct.getContent();
+        final List<Item> content = currentProduct.getContent();
         for (Item item : content) {
             Button button = new Button(productCardViewHolder.itemView.getContext());
             button.setBackgroundResource(R.drawable.btn_transparent_bg_bordered);
@@ -108,7 +107,7 @@ public class ProductsDashboardAdapter extends ListAdapter<Product, ProductsDashb
         }
     }
 
-    class ProductCardViewHolder extends RecyclerView.ViewHolder {
+    final class ProductCardViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.product_image)
         ImageView mImage;
         @BindView(R.id.top_description)
@@ -135,6 +134,4 @@ public class ProductsDashboardAdapter extends ListAdapter<Product, ProductsDashb
     public interface OnItemClickedListener {
         void displayItem(String url);
     }
-
-
 }

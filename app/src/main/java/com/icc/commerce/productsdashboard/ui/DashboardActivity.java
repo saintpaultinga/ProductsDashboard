@@ -1,6 +1,5 @@
-package com.icc.commerce.productsdashboard;
+package com.icc.commerce.productsdashboard.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -11,9 +10,13 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 
-import com.icc.commerce.productsdashboard.adapters.ProductsDashboardAdapter;
+import com.icc.commerce.productsdashboard.R;
+import com.icc.commerce.productsdashboard.adapter.ProductsDashboardAdapter;
+import com.icc.commerce.productsdashboard.config.ApplicationConfig;
 import com.icc.commerce.productsdashboard.net.util.Utils;
 import com.icc.commerce.productsdashboard.viewmodel.ProductViewModel;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,13 +28,17 @@ public class DashboardActivity extends AppCompatActivity implements
     @BindView(R.id.dashboard)
     RecyclerView mRecyclerView;
     @BindView(R.id.main_layout)
-    CoordinatorLayout coordinatorLayout;
+    CoordinatorLayout mCoordinatorLayout;
+    @Inject
+    ProductViewModel productViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
         ButterKnife.bind(this);
+        ((ApplicationConfig) getApplication()).getApplicationComponent().inject(this);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setHasFixedSize(true);
@@ -40,14 +47,11 @@ public class DashboardActivity extends AppCompatActivity implements
                 new ProductsDashboardAdapter();
         mRecyclerView.setAdapter(productsDashboardAdapterdapter);
 
-        // TODO : use dagger for injection
-        ProductViewModel productViewModel = ViewModelProviders.of(this)
-                .get(ProductViewModel.class);
         productsDashboardAdapterdapter.setListener(this);
 
         if (!Utils.isConnectedToInternet(this)) {
             Timber.d("No internet connection");
-            Snackbar.make(coordinatorLayout,getString(R.string.no_internet_connexion),
+            Snackbar.make(mCoordinatorLayout,getString(R.string.no_internet_connexion),
                     Snackbar.LENGTH_SHORT).show();
             return;
         }
