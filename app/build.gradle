@@ -45,6 +45,12 @@ dependencies {
     // Gson dependency
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    /* dagger core dependency for DI*/
+    annotationProcessor "com.google.dagger:dagger-compiler:2.13"
+    implementation "com.google.dagger:dagger:2.13"
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.13"
+    implementation "com.google.dagger:dagger-android-support:2.13"
     // timber dependency
     implementation 'com.jakewharton.timber:timber:4.7.1'
     // picasso dependency
